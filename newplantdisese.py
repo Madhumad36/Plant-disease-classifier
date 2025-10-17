@@ -10,19 +10,15 @@ Original file is located at
 import os
 import shutil
 import numpy as np
-# Note: You may need to install scikit-learn (sklearn) if not already present
-# !pip install scikit-learn
 from sklearn.model_selection import train_test_split
-# Note: You may need to install tqdm for the progress bar
-# !pip install tqdm
 from tqdm import tqdm
 
 # --- 1. Configuration (Using Your Drive Paths) ---
 
-# ⚠️ Input Path: Contains the 4 class folders (e.g., 'Pepper_bell___healthy')
+# Input Path: Contains the 4 class folders (e.g., 'Pepper_bell___healthy')
 DATA_ROOT = '/content/drive/MyDrive/PlantVillage'
 
-# ⚠️ Output Path: Where the new 'train', 'valid', and 'test' folders will be created
+# Output Path: Where the new 'train', 'valid', and 'test' folders will be created
 OUTPUT_ROOT = '/content/drive/MyDrive/output.dataplant'
 
 # Define the split ratios (must sum to 1.0)
@@ -42,10 +38,9 @@ for class_name in os.listdir(DATA_ROOT):
     # We only process directories that contain the images
     if os.path.isdir(class_path):
         for image_name in os.listdir(class_path):
-            # Check for common image file extensions
             if image_name.lower().endswith(('.jpg', '.jpeg', '.png')):
                 all_files.append(os.path.join(class_path, image_name))
-                all_labels.append(class_name) # The folder name is the label
+                all_labels.append(class_name) 
 
 print(f"Total images found: {len(all_files)}")
 print(f"Classes being used: {sorted(list(set(all_labels)))}")
@@ -97,9 +92,6 @@ def create_and_copy(file_list, label_list, split_name):
 # Clean up previous split in the output folder if it exists
 if os.path.exists(OUTPUT_ROOT):
     # This step is commented out to prevent accidental deletion,
-    # but you should manually clear the folder if you run this multiple times!
-    # shutil.rmtree(OUTPUT_ROOT)
-    pass # If the folder exists, the os.makedirs(..., exist_ok=True) will handle it.
 
 create_and_copy(X_train, y_train, 'train')
 create_and_copy(X_val, y_val, 'valid')
@@ -117,7 +109,7 @@ import matplotlib.pyplot as plt
 import os
 
 # --- Configuration for 4-Class Project ---
-# Note: Paths point to the folder created by your previous script
+
 BASE_DIR = '/content/drive/MyDrive/output.dataplant'
 train_dir = os.path.join(BASE_DIR, 'train')
 valid_dir = os.path.join(BASE_DIR, 'valid')
@@ -126,7 +118,7 @@ test_dir = os.path.join(BASE_DIR, 'test') # For final evaluation later
 IMG_SIZE = (224, 224)
 BATCH_SIZE = 32
 EPOCHS = 10
-NUM_CLASSES = 4 # You have 4 distinct folder/class names
+NUM_CLASSES = 4 
 
 # --- Data Augmentation and Generator Setup ---
 
